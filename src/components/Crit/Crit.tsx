@@ -24,45 +24,59 @@ const Crit: React.FC<CritProps> = ({ id, index }: CritProps) => {
     dispatch(removeFeedbackCrit(crit.id));
   };
 
+  const computeListGroupItemVariant = (isDragging: boolean): string => {
+    if (crit.isComment) return 'info';
+    if (isDragging) return 'dark';
+    return '';
+  };
+
   return (
     <Draggable draggableId={crit.id} index={index}>
       {(provided, snapshot) => (
         <ListGroup.Item
-          variant={snapshot.isDragging ? 'dark' : ''}
+          variant={computeListGroupItemVariant(snapshot.isDragging)}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
           ref={provided.innerRef}
           className="crit"
         >
-          <div className="crit-text mb-2">{crit.text}</div>
-          <div className="crit-controls">
+          <div className="crit-text">{crit.text}</div>
+          <div className="crit-controls mt-2">
             <div className="crit-add-remove">
-              <Button
-                variant="outline-primary"
-                size="sm"
-                className="mr-1"
-                onClick={onAddClick}
-              >
-                Add
-              </Button>
-              <Button
-                variant="outline-primary mr-1"
-                size="sm"
-                onClick={onRemoveClick}
-              >
-                Remove
-              </Button>
-              <Button
-                variant="secondary"
-                size="sm"
-                className="crit-pointvalue"
-                disabled
-              >
-                {crit.pointValue} point{crit.pointValue === 1 ? '' : 's'}
-              </Button>
+              {!crit.isComment && (
+                <>
+                  <Button
+                    variant="outline-primary"
+                    size="sm"
+                    className="mr-1"
+                    onClick={onAddClick}
+                  >
+                    Add
+                  </Button>
+                  <Button
+                    variant="outline-primary mr-1"
+                    size="sm"
+                    onClick={onRemoveClick}
+                  >
+                    Remove
+                  </Button>
+                  <Button
+                    variant="secondary"
+                    size="sm"
+                    className="crit-pointvalue"
+                    disabled
+                  >
+                    {crit.pointValue} point{crit.pointValue === 1 ? '' : 's'}
+                  </Button>
+                </>
+              )}
             </div>
+
             <div className="crit-edit">
-              <Button variant="outline-warning" size="sm">
+              <Button
+                variant={`${crit.isComment ? '' : 'outline-'}warning`}
+                size="sm"
+              >
                 Edit
               </Button>
             </div>

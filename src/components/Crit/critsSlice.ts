@@ -7,6 +7,7 @@ export interface Crit {
   text: string;
   pointValue: number;
   occurs: number;
+  isComment: boolean;
 }
 
 interface CritsState {
@@ -21,60 +22,70 @@ const initialState: CritsState = {
       text: loremIpsum({ count: 1, units: 'paragraph' }) + '..',
       pointValue: 1,
       occurs: 0,
+      isComment: true,
     },
     'crit-2': {
       id: 'crit-2',
       text: 'This is a test question?',
       pointValue: 1,
       occurs: 0,
+      isComment: false,
     },
     'crit-3': {
       id: 'crit-3',
       text: "I'm upset about something!!!",
       pointValue: 1,
       occurs: 0,
+      isComment: false,
     },
     'crit-4': {
       id: 'crit-4',
       text: loremIpsum(),
       pointValue: 1,
       occurs: 0,
+      isComment: false,
     },
     'crit-5': {
       id: 'crit-5',
       text: loremIpsum(),
       pointValue: 1,
       occurs: 0,
+      isComment: false,
     },
     'crit-6': {
       id: 'crit-6',
       text: loremIpsum(),
       pointValue: 1,
       occurs: 0,
+      isComment: false,
     },
     'crit-7': {
       id: 'crit-7',
       text: loremIpsum(),
       pointValue: 1,
       occurs: 0,
+      isComment: false,
     },
     'crit-8': {
       id: 'crit-8',
       text: loremIpsum(),
       pointValue: 1,
       occurs: 0,
+      isComment: false,
     },
     'crit-9': {
       id: 'crit-9',
       text: loremIpsum(),
       pointValue: 1,
       occurs: 0,
+      isComment: false,
     },
     'crit-10': {
       id: 'crit-10',
       text: loremIpsum(),
       pointValue: 1,
       occurs: 0,
+      isComment: false,
     },
   },
   feedbackCritIds: [],
