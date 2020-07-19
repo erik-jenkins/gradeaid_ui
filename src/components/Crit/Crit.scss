@@ -1,3 +1,7 @@
+@import '~bootswatch/dist/yeti/variables';
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+
 .crit-controls {
   display: flex;
   justify-content: space-between;
@@ -5,4 +9,20 @@
 
 .crit-pointvalue {
   border-radius: 50px !important;
+}
+
+.crit-text {
+  & > :last-child {
+    margin-bottom: 0;
+  }
+
+  td,
+  th {
+    border: 1px solid theme-color-level('info', -4);
+    padding: 0.25rem 0.75rem;
+  }
+
+  table {
+    margin-bottom: 1rem;
+  }
 }

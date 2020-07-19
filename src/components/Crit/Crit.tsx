@@ -1,7 +1,9 @@
+import marked from 'marked';
 import React from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import { Button, ListGroup } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
+import sanitizeHtml from 'sanitize-html';
 import { RootState } from '../../app/store';
 import './Crit.scss';
 import { addFeedbackCrit, removeFeedbackCrit } from './critsSlice';
@@ -30,6 +32,13 @@ const Crit: React.FC<CritProps> = ({ id, index }: CritProps) => {
     return '';
   };
 
+  const parseAndSanitize = (text: string): string => {
+    const dirty = marked(text);
+    return sanitizeHtml(dirty, {
+      allowedTags: sanitizeHtml.defaults.allowedTags.concat(['h1', 'h2']),
+    });
+  };
+
   return (
     <Draggable draggableId={crit.id} index={index}>
       {(provided, snapshot) => (
@@ -40,7 +49,12 @@ const Crit: React.FC<CritProps> = ({ id, index }: CritProps) => {
           ref={provided.innerRef}
           className="crit"
         >
-          <div className="crit-text">{crit.text}</div>
+          <div
+            className="crit-text"
+            dangerouslySetInnerHTML={{
+              __html: parseAndSanitize(crit.text),
+            }}
+          ></div>
           <div className="crit-controls mt-2">
             <div className="crit-add-remove">
               {!crit.isComment && (

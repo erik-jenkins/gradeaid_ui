@@ -15,18 +15,38 @@ interface CritsState {
   feedbackCritIds: string[];
 }
 
+const exampleComment = `
+${loremIpsum({ count: 1, units: 'paragraph' })}
+
+Use the form $kx + \\omega t$ to blah blah blah...
+
+Example link: [Google](https://google.com/)
+
+| Syntax      | Description |
+| ----------- | ----------- |
+| Header      | Title       |
+| Paragraph   | Text        |
+
+\`\`\`
+console.log('hello!')
+\`\`\`
+
+$$ax^2 + bx + c$$
+$$x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}$$
+`;
+
 const initialState: CritsState = {
   critsById: {
     'crit-1': {
       id: 'crit-1',
-      text: loremIpsum({ count: 1, units: 'paragraph' }) + '..',
+      text: exampleComment,
       pointValue: 1,
       occurs: 0,
       isComment: true,
     },
     'crit-2': {
       id: 'crit-2',
-      text: 'This is a test question?',
+      text: 'This is a question?',
       pointValue: 1,
       occurs: 0,
       isComment: false,
