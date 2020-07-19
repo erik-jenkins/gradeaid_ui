@@ -4,8 +4,8 @@ import { Draggable } from 'react-beautiful-dnd';
 import { Button, ListGroup } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../app/store';
-import { addFeedbackCrit, removeFeedbackCrit } from '../Feedback/feedbackSlice';
 import './Crit.scss';
+import { addFeedbackCrit, removeFeedbackCrit } from './critsSlice';
 
 interface CritProps {
   id: string;

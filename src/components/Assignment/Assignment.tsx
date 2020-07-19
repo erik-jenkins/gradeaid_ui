@@ -5,8 +5,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../app/store';
 import Category from '../Category';
 import { reorderCrits } from '../Category/categoriesSlice';
+import { reorderFeedbackCrits } from '../Crit/critsSlice';
 import Feedback from '../Feedback';
-import { reorderFeedbackCrits } from '../Feedback/feedbackSlice';
 import './Assignment.scss';
 import { reorderCategories } from './assignmentsSlice';
 
