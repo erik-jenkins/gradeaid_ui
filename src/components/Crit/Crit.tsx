@@ -1,4 +1,3 @@
-import { loremIpsum } from 'lorem-ipsum';
 import React from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import { Button, ListGroup } from 'react-bootstrap';
@@ -11,8 +10,6 @@ interface CritProps {
   id: string;
   index: number;
 }
-
-const paragraph = loremIpsum({ count: 1, units: 'paragraph' });
 
 const Crit: React.FC<CritProps> = ({ id, index }: CritProps) => {
   const crit = useSelector((state: RootState) => state.crits.critsById[id]);
@@ -37,9 +34,7 @@ const Crit: React.FC<CritProps> = ({ id, index }: CritProps) => {
           ref={provided.innerRef}
           className="crit"
         >
-          <div className="crit-text mb-2">
-            {id === 'crit-1' ? paragraph : crit.text}
-          </div>
+          <div className="crit-text mb-2">{crit.text}</div>
           <div className="crit-controls">
             <div className="crit-add-remove">
               <Button

@@ -18,19 +18,19 @@ const initialState: CritsState = {
   critsById: {
     'crit-1': {
       id: 'crit-1',
-      text: loremIpsum(),
+      text: loremIpsum({ count: 1, units: 'paragraph' }) + '..',
       pointValue: 1,
       occurs: 0,
     },
     'crit-2': {
       id: 'crit-2',
-      text: loremIpsum(),
+      text: 'This is a test question?',
       pointValue: 1,
       occurs: 0,
     },
     'crit-3': {
       id: 'crit-3',
-      text: loremIpsum(),
+      text: "I'm upset about something!!!",
       pointValue: 1,
       occurs: 0,
     },
