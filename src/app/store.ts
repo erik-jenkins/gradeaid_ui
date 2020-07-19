@@ -1,9 +1,15 @@
-import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import counterReducer from '../features/counter/counterSlice';
+import { Action, configureStore, ThunkAction } from '@reduxjs/toolkit';
+import assignmentsReducer from '../components/Assignment/assignmentsSlice';
+import categoriesReducer from '../components/Category/categoriesSlice';
+import critsReducer from '../components/Crit/critsSlice';
+import feedbackReducer from '../components/Feedback/feedbackSlice';
 
 export const store = configureStore({
   reducer: {
-    counter: counterReducer,
+    assignments: assignmentsReducer,
+    categories: categoriesReducer,
+    crits: critsReducer,
+    feedback: feedbackReducer,
   },
 });
 

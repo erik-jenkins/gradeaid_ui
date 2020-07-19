@@ -1,5 +1,8 @@
 .navbar {
   margin-bottom: 1.6em;
-  // border-bottom-left-radius: 5px;
-  // border-bottom-right-radius: 5px;
+  background: linear-gradient(
+    180deg,
+    hsl(195, 100%, 25%),
+    hsla(195, 100%, 40%, 1)
+  );
 }

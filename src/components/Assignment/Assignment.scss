@@ -7,17 +7,3 @@ div.assignment-container {
     margin-bottom: 0;
   }
 }
-
-.feedback-controls {
-  display: flex;
-
-  #copy-button {
-    flex-grow: 2;
-    margin-right: 2px;
-  }
-
-  #reset-button {
-    flex-grow: 1;
-    margin-left: 2px;
-  }
-}

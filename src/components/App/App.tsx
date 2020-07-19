@@ -8,11 +8,11 @@ import './App.scss';
 function App() {
   return (
     <div className="App">
+      <Navbar />
       <Container>
-        <Navbar />
         <Switch>
           <Route path="/courses/:courseId/assignments/:assignmentId">
-            <Assignment />
+            <Assignment id="assignment-1" />
           </Route>
           <Route path="/courses/:courseId/assignments">
             <p>Assignments list for a given course</p>
