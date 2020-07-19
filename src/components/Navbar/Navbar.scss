@@ -1,8 +1,12 @@
+@import '~bootswatch/dist/yeti/variables';
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+
 .navbar {
   margin-bottom: 1.6em;
   background: linear-gradient(
     180deg,
-    hsl(195, 100%, 25%),
-    hsla(195, 100%, 40%, 1)
+    theme-color-level('primary', 3),
+    theme-color-level('primary', -3)
   );
 }
