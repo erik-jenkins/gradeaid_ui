@@ -15,8 +15,7 @@ interface CritsState {
   feedbackCritIds: string[];
 }
 
-const exampleComment = `
-${loremIpsum({ count: 1, units: 'paragraph' })}
+const exampleComment = `${loremIpsum({ count: 1, units: 'paragraph' })}
 
 Use the form $kx + \\omega t$ to blah blah blah...
 
@@ -121,6 +120,10 @@ const critsSlice = createSlice({
   name: 'crits',
   initialState,
   reducers: {
+    setCrit(state: CritsState, { payload: crit }: PayloadAction<Crit>) {
+      const { id } = crit;
+      state.critsById[id] = crit;
+    },
     addFeedbackCrit(
       state: CritsState,
       { payload: critId }: PayloadAction<string>
@@ -181,6 +184,7 @@ const critsSlice = createSlice({
 });
 
 export const {
+  setCrit,
   addFeedbackCrit,
   removeFeedbackCrit,
   reorderFeedbackCrits,

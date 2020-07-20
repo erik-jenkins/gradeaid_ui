@@ -1,12 +1,12 @@
-import marked from 'marked';
-import React from 'react';
+import React, { useState } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
-import { Button, ListGroup } from 'react-bootstrap';
-import { useDispatch, useSelector } from 'react-redux';
-import sanitizeHtml from 'sanitize-html';
+import { ListGroup } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
 import { RootState } from '../../app/store';
 import './Crit.scss';
-import { addFeedbackCrit, removeFeedbackCrit } from './critsSlice';
+import CritControls from './CritControls';
+import { Crit as CritType } from './critsSlice';
+import CritText from './CritText';
 
 interface CritProps {
   id: string;
@@ -16,28 +16,14 @@ interface CritProps {
 const Crit: React.FC<CritProps> = ({ id, index }: CritProps) => {
   const crit = useSelector((state: RootState) => state.crits.critsById[id]);
 
-  const dispatch = useDispatch();
-
-  const onAddClick = () => {
-    dispatch(addFeedbackCrit(crit.id));
-  };
-
-  const onRemoveClick = () => {
-    dispatch(removeFeedbackCrit(crit.id));
-  };
-
   const computeListGroupItemVariant = (isDragging: boolean): string => {
     if (crit.isComment) return 'info';
     if (isDragging) return 'dark';
     return '';
   };
 
-  const parseAndSanitize = (text: string): string => {
-    const dirty = marked(text);
-    return sanitizeHtml(dirty, {
-      allowedTags: sanitizeHtml.defaults.allowedTags.concat(['h1', 'h2']),
-    });
-  };
+  const [showEditForms, setShowEditForms] = useState(false);
+  const [editCrit, setEditCrit] = useState<CritType>(crit);
 
   return (
     <Draggable draggableId={crit.id} index={index}>
@@ -49,51 +35,20 @@ const Crit: React.FC<CritProps> = ({ id, index }: CritProps) => {
           ref={provided.innerRef}
           className="crit"
         >
-          <div
-            className="crit-text"
-            dangerouslySetInnerHTML={{
-              __html: parseAndSanitize(crit.text),
-            }}
-          ></div>
-          <div className="crit-controls mt-2">
-            <div className="crit-add-remove">
-              {!crit.isComment && (
-                <>
-                  <Button
-                    variant="outline-primary"
-                    size="sm"
-                    className="mr-1"
-                    onClick={onAddClick}
-                  >
-                    Add
-                  </Button>
-                  <Button
-                    variant="outline-primary mr-1"
-                    size="sm"
-                    onClick={onRemoveClick}
-                  >
-                    Remove
-                  </Button>
-                  <Button
-                    variant="secondary"
-                    size="sm"
-                    className="crit-pointvalue"
-                    disabled
-                  >
-                    {crit.pointValue} point{crit.pointValue === 1 ? '' : 's'}
-                  </Button>
-                </>
-              )}
-            </div>
-
-            <div className="crit-edit">
-              <Button
-                variant={`${crit.isComment ? '' : 'outline-'}warning`}
-                size="sm"
-              >
-                Edit
-              </Button>
-            </div>
+          <CritText
+            crit={crit}
+            showEditForms={showEditForms}
+            editCrit={editCrit}
+            setEditCrit={setEditCrit}
+          />
+          <div className="mt-2">
+            <CritControls
+              crit={crit}
+              showEditForms={showEditForms}
+              setShowEditForms={setShowEditForms}
+              editCrit={editCrit}
+              setEditCrit={setEditCrit}
+            />
           </div>
         </ListGroup.Item>
       )}
