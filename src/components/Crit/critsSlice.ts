@@ -1,18 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { loremIpsum } from 'lorem-ipsum';
 import { DropResult } from 'react-beautiful-dnd';
-
-export interface Crit {
-  id: string;
-  text: string;
-  pointValue: number;
-  occurs: number;
-  isComment: boolean;
-}
+import { createCrit } from '../../app/actions';
+import { Crit } from './types';
 
 interface CritsState {
   critsById: Record<string, Crit>;
   feedbackCritIds: string[];
+  allIds: string[];
 }
 
 const exampleComment = `${loremIpsum({ count: 1, units: 'paragraph' })}
@@ -109,6 +104,18 @@ const initialState: CritsState = {
       isComment: false,
     },
   },
+  allIds: [
+    'crit-1',
+    'crit-2',
+    'crit-3',
+    'crit-4',
+    'crit-5',
+    'crit-6',
+    'crit-7',
+    'crit-8',
+    'crit-9',
+    'crit-10',
+  ],
   feedbackCritIds: [],
 };
 
@@ -183,6 +190,13 @@ const critsSlice = createSlice({
       state.feedbackCritIds = [];
     },
   },
+  extraReducers: (builder) =>
+    builder.addCase(createCrit.fulfilled, (state: CritsState, { payload }) => {
+      const { newCrit } = payload;
+      debugger;
+      state.critsById[newCrit.id] = newCrit;
+      state.allIds.push(newCrit.id);
+    }),
 });
 
 export const {

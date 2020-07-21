@@ -3,10 +3,10 @@ import { Droppable } from 'react-beautiful-dnd';
 import { Col, ListGroup, Row } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../app/store';
-import { Crit } from '../Crit/critsSlice';
-import FeedbackCrit from '../FeedbackCrit';
+import { Crit } from '../Crit/types';
 import './Feedback.scss';
 import FeedbackControls from './FeedbackControls';
+import FeedbackCrit from './FeedbackCrit';
 import FeedbackScore from './FeedbackScore';
 import FeedbackText from './FeedbackText';
 

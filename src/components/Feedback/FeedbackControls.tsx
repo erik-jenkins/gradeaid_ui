@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
-import { Crit, resetFeedbackCrits } from '../Crit/critsSlice';
+import { resetFeedbackCrits } from '../Crit/critsSlice';
+import { Crit } from '../Crit/types';
 import { constructFeedbackText } from './computeFeedback';
 import './FeedbackControls.scss';
 

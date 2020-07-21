@@ -3,8 +3,9 @@ import React from 'react';
 import { Button } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import sanitizeHtml from 'sanitize-html';
-import { addFeedbackCrit, Crit, removeFeedbackCrit } from './critsSlice';
+import { addFeedbackCrit, removeFeedbackCrit } from './critsSlice';
 import './ShowCrit.scss';
+import { Crit } from './types';
 
 const parseAndSanitize = (text: string): string => {
   const dirty = marked(text);

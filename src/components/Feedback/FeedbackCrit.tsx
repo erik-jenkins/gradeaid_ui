@@ -1,7 +1,7 @@
 import React from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import { ListGroupItem } from 'react-bootstrap';
-import { Crit } from '../Crit/critsSlice';
+import { Crit } from '../Crit/types';
 
 interface FeedbackCritProps {
   crit: Crit;

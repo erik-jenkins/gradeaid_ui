@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { Crit } from '../Crit/critsSlice';
+import { Crit } from '../Crit/types';
 
 const punctuationTypes = ['.', ',', ':', '!', '?'];
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Form } from 'react-bootstrap';
-import { Crit } from '../Crit/critsSlice';
+import { Crit } from '../Crit/types';
 import { constructFeedbackText } from './computeFeedback';
 
 interface FeedbackTextProps {

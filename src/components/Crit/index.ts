@@ -1,3 +1,3 @@
-import Crit from './Crit';
+import CritListItem from './CritListItem';
 
-export default Crit;
+export default CritListItem;

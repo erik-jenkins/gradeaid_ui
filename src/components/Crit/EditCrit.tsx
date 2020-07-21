@@ -1,18 +1,24 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Button, Form } from 'react-bootstrap';
-import { useDispatch } from 'react-redux';
-import { Crit, setCrit } from './critsSlice';
 import './EditCrit.scss';
+import { Crit } from './types';
+
+// TODO: add validation
+// Validation can be added by taking in an error interface for this specific form
 
 interface EditCritProps {
-  crit: Crit;
-  showEditForm: boolean;
-  setShowEditForm: (show: boolean) => void;
+  editCrit: Crit;
+  setEditCrit: (editCrit: Crit) => void;
+  onSaveClick: (event: React.MouseEvent<HTMLFormElement>) => void;
+  onCancelClick: () => void;
 }
 
-const EditCrit = ({ crit, showEditForm, setShowEditForm }: EditCritProps) => {
-  const [editCrit, setEditCrit] = useState<Crit>(crit);
-  const dispatch = useDispatch();
+const EditCrit = ({
+  editCrit,
+  setEditCrit,
+  onSaveClick,
+  onCancelClick,
+}: EditCritProps) => {
   const editCritTextarea = useRef(null);
 
   useEffect(() => {
@@ -21,18 +27,7 @@ const EditCrit = ({ crit, showEditForm, setShowEditForm }: EditCritProps) => {
       textArea.style.height = '';
       textArea.style.height = textArea.scrollHeight + 10 + 'px';
     }
-  }, [showEditForm, editCrit.text]);
-
-  const onSaveClick = () => {
-    dispatch(setCrit(editCrit));
-    setShowEditForm(false);
-  };
-
-  const onCancelClick = () => {
-    // TODO - alert if crit != editCrit
-    setEditCrit(crit);
-    setShowEditForm(false);
-  };
+  }, [editCrit.text]);
 
   return (
     <div className="edit-crit">
@@ -47,6 +42,7 @@ const EditCrit = ({ crit, showEditForm, setShowEditForm }: EditCritProps) => {
           }}
           style={{ fontFamily: 'monospace' }}
           ref={editCritTextarea}
+          required
         />
       </div>
       <div className="crit-controls mt-1">
@@ -77,6 +73,7 @@ const EditCrit = ({ crit, showEditForm, setShowEditForm }: EditCritProps) => {
 
         <div className="crit-edit-save">
           <Button
+            type="submit"
             variant="success"
             size="sm"
             className="mr-1"

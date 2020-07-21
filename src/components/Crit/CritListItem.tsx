@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import { ListGroup } from 'react-bootstrap';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../app/store';
 import './Crit.scss';
+import { setCrit } from './critsSlice';
 import EditCrit from './EditCrit';
 import ShowCrit from './ShowCrit';
 
@@ -12,9 +13,11 @@ interface CritProps {
   index: number;
 }
 
-const Crit: React.FC<CritProps> = ({ id, index }: CritProps) => {
+const CritListItem: React.FC<CritProps> = ({ id, index }: CritProps) => {
   const crit = useSelector((state: RootState) => state.crits.critsById[id]);
   const [showEditForm, setShowEditForm] = useState(false);
+  const [editCrit, setEditCrit] = useState(crit);
+  const dispatch = useDispatch();
 
   // have to rerender MathJax after editing
   useEffect(() => {
@@ -30,6 +33,17 @@ const Crit: React.FC<CritProps> = ({ id, index }: CritProps) => {
     return '';
   };
 
+  const onSaveClick = () => {
+    dispatch(setCrit(editCrit));
+    setShowEditForm(false);
+  };
+
+  const onCancelClick = () => {
+    // TODO - alert if crit != editCrit
+    setEditCrit(crit);
+    setShowEditForm(false);
+  };
+
   return (
     <Draggable draggableId={crit.id} index={index}>
       {(provided, snapshot) => (
@@ -42,9 +56,10 @@ const Crit: React.FC<CritProps> = ({ id, index }: CritProps) => {
         >
           {showEditForm ? (
             <EditCrit
-              crit={crit}
-              showEditForm={showEditForm}
-              setShowEditForm={setShowEditForm}
+              editCrit={editCrit}
+              setEditCrit={setEditCrit}
+              onSaveClick={onSaveClick}
+              onCancelClick={onCancelClick}
             />
           ) : (
             <ShowCrit crit={crit} setShowEditForm={setShowEditForm} />
@@ -55,4 +70,4 @@ const Crit: React.FC<CritProps> = ({ id, index }: CritProps) => {
   );
 };
 
-export default Crit;
+export default CritListItem;

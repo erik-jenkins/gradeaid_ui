@@ -1,5 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { DropResult } from 'react-beautiful-dnd';
+import { createCrit } from '../../app/actions';
+import { Crit } from '../Crit/types';
 
 interface Category {
   id: string;
@@ -9,6 +11,11 @@ interface Category {
 
 interface CategoriesState {
   categoriesByID: Record<string, Category>;
+}
+
+interface AddCritToCategoryPayload {
+  crit: Crit;
+  categoryId: string;
 }
 
 const initialState: CategoriesState = {
@@ -30,6 +37,13 @@ const categoriesSlice = createSlice({
   name: 'categories',
   initialState,
   reducers: {
+    addCritToCategory(
+      state: CategoriesState,
+      { payload }: PayloadAction<AddCritToCategoryPayload>
+    ) {
+      const { crit, categoryId } = payload;
+      state.categoriesByID[categoryId].critIds.push(crit.id);
+    },
     reorderCrits(
       state: CategoriesState,
       { payload }: PayloadAction<DropResult>
@@ -54,8 +68,17 @@ const categoriesSlice = createSlice({
       destCategory.critIds.splice(destination.index, 0, critId);
     },
   },
+  extraReducers: (builder) =>
+    builder.addCase(
+      createCrit.fulfilled,
+      (state: CategoriesState, { payload }) => {
+        const { newCrit, categoryId } = payload;
+
+        state.categoriesByID[categoryId].critIds.push(newCrit.id);
+      }
+    ),
 });
 
-export const { reorderCrits } = categoriesSlice.actions;
+export const { addCritToCategory, reorderCrits } = categoriesSlice.actions;
 
 export default categoriesSlice.reducer;

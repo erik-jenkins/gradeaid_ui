@@ -3,7 +3,8 @@ import { Draggable, Droppable } from 'react-beautiful-dnd';
 import { Card, ListGroup, ListGroupItem } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../app/store';
-import Crit from '../Crit';
+import CritListItem from '../Crit';
+import AddCrit from '../Crit/AddCrit';
 import './Category.scss';
 
 interface CategoryProps {
@@ -33,7 +34,7 @@ const Category: React.FC<CategoryProps> = ({ id, index }: CategoryProps) => {
                 <ListGroup ref={provided.innerRef} {...provided.droppableProps}>
                   {category.critIds.length > 0 ? (
                     category.critIds.map((id, index) => (
-                      <Crit id={id} key={id} index={index} />
+                      <CritListItem id={id} key={id} index={index} />
                     ))
                   ) : (
                     <ListGroupItem variant="secondary">
@@ -41,6 +42,7 @@ const Category: React.FC<CategoryProps> = ({ id, index }: CategoryProps) => {
                     </ListGroupItem>
                   )}
                   {provided.placeholder}
+                  <AddCrit categoryId={id} />
                 </ListGroup>
               )}
             </Droppable>
