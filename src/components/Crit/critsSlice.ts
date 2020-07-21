@@ -1,7 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { loremIpsum } from 'lorem-ipsum';
 import { DropResult } from 'react-beautiful-dnd';
-import { createCrit } from '../../app/actions';
+import { createCrit } from '../../app/actions/createCrit';
+import { deleteCrit } from '../../app/actions/deleteCrit';
 import { Crit } from './types';
 
 interface CritsState {
@@ -190,12 +191,19 @@ const critsSlice = createSlice({
       state.feedbackCritIds = [];
     },
   },
-  extraReducers: (builder) =>
-    builder.addCase(createCrit.fulfilled, (state: CritsState, { payload }) => {
-      const { newCrit } = payload;
-      state.critsById[newCrit.id] = newCrit;
-      state.allIds.push(newCrit.id);
-    }),
+  extraReducers: (builder) => {
+    builder
+      .addCase(createCrit.fulfilled, (state: CritsState, { payload }) => {
+        const { newCrit } = payload;
+        state.critsById[newCrit.id] = newCrit;
+        state.allIds.push(newCrit.id);
+      })
+      .addCase(deleteCrit.fulfilled, (state: CritsState, { payload }) => {
+        const { deletedCritId } = payload;
+        delete state.critsById[deletedCritId];
+        state.allIds = state.allIds.filter((id) => id !== deletedCritId);
+      });
+  },
 });
 
 export const {

@@ -54,31 +54,30 @@ const Assignment = ({ id }: AssignmentProps) => {
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <Container className="assignment-container">
-        <Row noGutters>
-          <div className="assignment-header">
-            <h1>Assignment Title</h1>
-            <p className="text-muted">
-              from <a href="#courses/123">Example Course</a>
-            </p>
-          </div>
-        </Row>
+        <Row noGutters></Row>
         <Row>
           {/* Crit column */}
-          <Droppable droppableId={id} type="category">
-            {(provided) => (
-              <Col
-                sm={12}
-                md={8}
-                {...provided.droppableProps}
-                ref={provided.innerRef}
-              >
-                {assignment.categoryIds.map((categoryId, index) => (
-                  <Category key={categoryId} id={categoryId} index={index} />
-                ))}
-                {provided.placeholder}
-              </Col>
-            )}
-          </Droppable>
+          <Col sm={12} md={8}>
+            <div className="assignment-header">
+              <div className="assignment-header-details">
+                <h1>Assignment Title</h1>
+                <p className="text-muted">
+                  from <a href="#courses/123">Example Course</a>
+                </p>
+              </div>
+              <div className="assignment-header-controls">asd</div>
+            </div>
+            <Droppable droppableId={id} type="category">
+              {(provided) => (
+                <div {...provided.droppableProps} ref={provided.innerRef}>
+                  {assignment.categoryIds.map((categoryId, index) => (
+                    <Category key={categoryId} id={categoryId} index={index} />
+                  ))}
+                  {provided.placeholder}
+                </div>
+              )}
+            </Droppable>
+          </Col>
           {/* Feedback column */}
           <Col sm={12} md={4} className="column-feedback">
             <Feedback

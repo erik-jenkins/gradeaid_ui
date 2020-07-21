@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, ListGroup } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
-import { createCrit } from '../../app/actions';
+import { createCrit } from '../../app/actions/createCrit';
 import EditCrit from './EditCrit';
 import { Crit } from './types';
 

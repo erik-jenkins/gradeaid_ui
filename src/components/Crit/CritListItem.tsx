@@ -3,7 +3,6 @@ import { Draggable } from 'react-beautiful-dnd';
 import { ListGroup } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../app/store';
-import './Crit.scss';
 import { setCrit } from './critsSlice';
 import EditCrit from './EditCrit';
 import ShowCrit from './ShowCrit';
@@ -11,9 +10,14 @@ import ShowCrit from './ShowCrit';
 interface CritProps {
   id: string;
   index: number;
+  categoryId: string;
 }
 
-const CritListItem: React.FC<CritProps> = ({ id, index }: CritProps) => {
+const CritListItem: React.FC<CritProps> = ({
+  id,
+  index,
+  categoryId,
+}: CritProps) => {
   const crit = useSelector((state: RootState) => state.crits.critsById[id]);
   const [showEditForm, setShowEditForm] = useState(false);
   const [editCrit, setEditCrit] = useState(crit);
@@ -62,7 +66,11 @@ const CritListItem: React.FC<CritProps> = ({ id, index }: CritProps) => {
               onCancelClick={onCancelClick}
             />
           ) : (
-            <ShowCrit crit={crit} setShowEditForm={setShowEditForm} />
+            <ShowCrit
+              crit={crit}
+              setShowEditForm={setShowEditForm}
+              categoryId={categoryId}
+            />
           )}
         </ListGroup.Item>
       )}

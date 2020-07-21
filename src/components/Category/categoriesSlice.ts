@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { DropResult } from 'react-beautiful-dnd';
-import { createCrit } from '../../app/actions';
+import { createCrit } from '../../app/actions/createCrit';
+import { deleteCrit } from '../../app/actions/deleteCrit';
 import { Crit } from '../Crit/types';
 
 interface Category {
@@ -69,14 +70,19 @@ const categoriesSlice = createSlice({
     },
   },
   extraReducers: (builder) =>
-    builder.addCase(
-      createCrit.fulfilled,
-      (state: CategoriesState, { payload }) => {
+    builder
+      .addCase(createCrit.fulfilled, (state: CategoriesState, { payload }) => {
         const { newCrit, categoryId } = payload;
 
         state.categoriesByID[categoryId].critIds.push(newCrit.id);
-      }
-    ),
+      })
+      .addCase(deleteCrit.fulfilled, (state: CategoriesState, { payload }) => {
+        const { deletedCritId, categoryId } = payload;
+
+        state.categoriesByID[categoryId].critIds = state.categoriesByID[
+          categoryId
+        ].critIds.filter((id) => id !== deletedCritId);
+      }),
 });
 
 export const { addCritToCategory, reorderCrits } = categoriesSlice.actions;

@@ -1,8 +1,9 @@
 import marked from 'marked';
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import sanitizeHtml from 'sanitize-html';
+import { deleteCrit } from '../../app/actions/deleteCrit';
 import { addFeedbackCrit, removeFeedbackCrit } from './critsSlice';
 import './ShowCrit.scss';
 import { Crit } from './types';
@@ -17,10 +18,21 @@ const parseAndSanitize = (text: string): string => {
 interface ShowCritProps {
   crit: Crit;
   setShowEditForm: Function;
+  categoryId: string;
 }
 
-const ShowCrit: React.FC<ShowCritProps> = ({ crit, setShowEditForm }) => {
+enum DeleteCritSteps {
+  DELETE,
+  CONFIRM,
+}
+
+const ShowCrit: React.FC<ShowCritProps> = ({
+  crit,
+  setShowEditForm,
+  categoryId,
+}) => {
   const dispatch = useDispatch();
+  const [deleteCritStep, setDeleteCritStep] = useState(DeleteCritSteps.DELETE);
 
   const critHtml = parseAndSanitize(crit.text);
 
@@ -34,6 +46,23 @@ const ShowCrit: React.FC<ShowCritProps> = ({ crit, setShowEditForm }) => {
 
   const onEditClick = () => {
     setShowEditForm(true);
+  };
+
+  const onDeleteClick = () => {
+    if (deleteCritStep === DeleteCritSteps.DELETE) {
+      setDeleteCritStep(DeleteCritSteps.CONFIRM);
+      return;
+    }
+
+    if (deleteCritStep === DeleteCritSteps.CONFIRM) {
+      // dispatch the delete request
+      dispatch(deleteCrit({ critId: crit.id, categoryId }));
+      setDeleteCritStep(DeleteCritSteps.DELETE);
+    }
+  };
+
+  const resetDeleteState = () => {
+    setTimeout(() => setDeleteCritStep(DeleteCritSteps.DELETE), 3000);
   };
 
   return (
@@ -81,8 +110,18 @@ const ShowCrit: React.FC<ShowCritProps> = ({ crit, setShowEditForm }) => {
             variant={`${crit.isComment ? '' : 'outline-'}warning`}
             size="sm"
             onClick={onEditClick}
+            className="mr-1"
           >
             Edit
+          </Button>
+          <Button
+            variant={`${crit.isComment ? '' : 'outline-'}danger`}
+            size="sm"
+            onClick={onDeleteClick}
+            onBlur={() => setDeleteCritStep(DeleteCritSteps.DELETE)}
+            onMouseLeave={resetDeleteState}
+          >
+            {deleteCritStep === DeleteCritSteps.DELETE ? 'Delete' : 'Confirm'}
           </Button>
         </div>
       </div>

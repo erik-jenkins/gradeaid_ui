@@ -33,11 +33,16 @@ const Category: React.FC<CategoryProps> = ({ id, index }: CategoryProps) => {
               {(provided) => (
                 <ListGroup ref={provided.innerRef} {...provided.droppableProps}>
                   {category.critIds.length > 0 ? (
-                    category.critIds.map((id, index) => (
-                      <CritListItem id={id} key={id} index={index} />
+                    category.critIds.map((critId, index) => (
+                      <CritListItem
+                        id={critId}
+                        key={critId}
+                        index={index}
+                        categoryId={id}
+                      />
                     ))
                   ) : (
-                    <ListGroupItem variant="secondary">
+                    <ListGroupItem>
                       There's nothing here yet... please add a comment!
                     </ListGroupItem>
                   )}
