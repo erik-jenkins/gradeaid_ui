@@ -43,7 +43,11 @@ const Feedback: React.FC<FeedbackProps> = ({ maxScore, computeScore }) => {
         <Col>
           <Droppable droppableId="feedback-crits-droppable" type="feedback">
             {(provided) => (
-              <ListGroup {...provided.droppableProps} ref={provided.innerRef}>
+              <ListGroup
+                {...provided.droppableProps}
+                ref={provided.innerRef}
+                className="feedback-crits"
+              >
                 {feedbackCrits.map((crit, index) => (
                   <FeedbackCrit key={crit.id} crit={crit} index={index} />
                 ))}

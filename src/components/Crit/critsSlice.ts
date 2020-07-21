@@ -193,7 +193,6 @@ const critsSlice = createSlice({
   extraReducers: (builder) =>
     builder.addCase(createCrit.fulfilled, (state: CritsState, { payload }) => {
       const { newCrit } = payload;
-      debugger;
       state.critsById[newCrit.id] = newCrit;
       state.allIds.push(newCrit.id);
     }),
