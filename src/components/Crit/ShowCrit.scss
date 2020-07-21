@@ -2,6 +2,15 @@
 @import '~bootstrap/scss/functions';
 @import '~bootstrap/scss/variables';
 
+.crit-controls {
+  display: flex;
+  justify-content: space-between;
+}
+
+.crit-pointvalue {
+  border-radius: 50px !important;
+}
+
 .crit-text {
   & > :last-child {
     margin-bottom: 0;

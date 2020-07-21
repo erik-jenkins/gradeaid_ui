@@ -1,12 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import { ListGroup } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../app/store';
 import './Crit.scss';
-import CritControls from './CritControls';
-import { Crit as CritType } from './critsSlice';
-import CritText from './CritText';
+import EditCrit from './EditCrit';
+import ShowCrit from './ShowCrit';
 
 interface CritProps {
   id: string;
@@ -15,15 +14,21 @@ interface CritProps {
 
 const Crit: React.FC<CritProps> = ({ id, index }: CritProps) => {
   const crit = useSelector((state: RootState) => state.crits.critsById[id]);
+  const [showEditForm, setShowEditForm] = useState(false);
+
+  // have to rerender MathJax after editing
+  useEffect(() => {
+    const MathJax: any = window['MathJax'];
+    if (MathJax.typeset) {
+      MathJax.typeset();
+    }
+  }, [showEditForm, crit.text]);
 
   const computeListGroupItemVariant = (isDragging: boolean): string => {
     if (crit.isComment) return 'info';
     if (isDragging) return 'dark';
     return '';
   };
-
-  const [showEditForms, setShowEditForms] = useState(false);
-  const [editCrit, setEditCrit] = useState<CritType>(crit);
 
   return (
     <Draggable draggableId={crit.id} index={index}>
@@ -35,21 +40,15 @@ const Crit: React.FC<CritProps> = ({ id, index }: CritProps) => {
           ref={provided.innerRef}
           className="crit"
         >
-          <CritText
-            crit={crit}
-            showEditForms={showEditForms}
-            editCrit={editCrit}
-            setEditCrit={setEditCrit}
-          />
-          <div className="mt-2">
-            <CritControls
+          {showEditForm ? (
+            <EditCrit
               crit={crit}
-              showEditForms={showEditForms}
-              setShowEditForms={setShowEditForms}
-              editCrit={editCrit}
-              setEditCrit={setEditCrit}
+              showEditForm={showEditForm}
+              setShowEditForm={setShowEditForm}
             />
-          </div>
+          ) : (
+            <ShowCrit crit={crit} setShowEditForm={setShowEditForm} />
+          )}
         </ListGroup.Item>
       )}
     </Draggable>
