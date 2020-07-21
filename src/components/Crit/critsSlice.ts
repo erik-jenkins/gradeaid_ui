@@ -201,6 +201,9 @@ const critsSlice = createSlice({
       .addCase(deleteCrit.fulfilled, (state: CritsState, { payload }) => {
         const { deletedCritId } = payload;
         delete state.critsById[deletedCritId];
+        state.feedbackCritIds = state.feedbackCritIds.filter(
+          (id) => id !== deletedCritId
+        );
         state.allIds = state.allIds.filter((id) => id !== deletedCritId);
       });
   },

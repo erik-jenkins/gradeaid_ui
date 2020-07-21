@@ -1,6 +1,6 @@
 import React from 'react';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
-import { Col, Container, Row } from 'react-bootstrap';
+import { Button, Col, Container, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../app/store';
 import Category from '../Category';
@@ -65,7 +65,9 @@ const Assignment = ({ id }: AssignmentProps) => {
                   from <a href="#courses/123">Example Course</a>
                 </p>
               </div>
-              <div className="assignment-header-controls">asd</div>
+              <div className="assignment-header-controls">
+                <Button variant="warning">Edit</Button>
+              </div>
             </div>
             <Droppable droppableId={id} type="category">
               {(provided) => (
