@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from 'react-bootstrap';
+import { Button, Form } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import './CritControls.scss';
 import {
@@ -52,7 +52,7 @@ const CritControls: React.FC<CritControlsProps> = ({
   return (
     <div className="crit-controls">
       <div className="crit-add-remove">
-        {!crit.isComment && (
+        {!crit.isComment && !showEditForms && (
           <>
             <Button
               variant="outline-primary"
@@ -79,6 +79,30 @@ const CritControls: React.FC<CritControlsProps> = ({
               {crit.pointValue} point{crit.pointValue === 1 ? '' : 's'}
             </Button>
           </>
+        )}
+        {showEditForms && (
+          <Form inline className="edit-crit-pointvalue-comment-form">
+            <Form.Label className="mr-2">Points</Form.Label>
+            <Form.Control
+              className="mr-2 edit-crit-pointvalue"
+              size="sm"
+              placeholder="5"
+              value={editCrit.pointValue}
+              type="number"
+              onChange={(e) =>
+                setEditCrit({ ...editCrit, pointValue: +e.target.value })
+              }
+            />
+            <Form.Check
+              type="checkbox"
+              className="mr-2"
+              label="Comment"
+              checked={editCrit.isComment}
+              onClick={() =>
+                setEditCrit({ ...editCrit, isComment: !editCrit.isComment })
+              }
+            />
+          </Form>
         )}
       </div>
 
