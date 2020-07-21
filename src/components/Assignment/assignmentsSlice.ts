@@ -5,6 +5,9 @@ interface Assignment {
   id: string;
   name: string;
   categoryIds: string[];
+  maxScore: number;
+  useMasteryScoring: boolean;
+  masteryPoints: number;
 }
 
 interface AssignmentsState {
@@ -17,6 +20,9 @@ const initialState: AssignmentsState = {
       id: 'assignment-1',
       name: 'Example Assignment 1',
       categoryIds: ['category-1', 'category-2'],
+      maxScore: 100,
+      useMasteryScoring: true,
+      masteryPoints: 2,
     },
   },
 };

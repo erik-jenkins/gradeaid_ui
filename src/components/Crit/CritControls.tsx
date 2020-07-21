@@ -88,7 +88,9 @@ const CritControls: React.FC<CritControlsProps> = ({
               size="sm"
               placeholder="5"
               value={editCrit.pointValue}
+              disabled={editCrit.isComment}
               type="number"
+              min={0}
               onChange={(e) =>
                 setEditCrit({ ...editCrit, pointValue: +e.target.value })
               }
@@ -98,7 +100,7 @@ const CritControls: React.FC<CritControlsProps> = ({
               className="mr-2"
               label="Comment"
               checked={editCrit.isComment}
-              onClick={() =>
+              onChange={() =>
                 setEditCrit({ ...editCrit, isComment: !editCrit.isComment })
               }
             />

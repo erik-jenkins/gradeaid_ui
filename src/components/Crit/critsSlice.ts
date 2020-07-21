@@ -32,6 +32,8 @@ console.log('hello!')
 
 $$ax^2 + bx + c$$
 $$x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}$$
+
+![random image](https://picsum.photos/200)
 `;
 
 const initialState: CritsState = {
@@ -46,7 +48,7 @@ const initialState: CritsState = {
     'crit-2': {
       id: 'crit-2',
       text: 'This is a question?',
-      pointValue: 1,
+      pointValue: 5,
       occurs: 0,
       isComment: false,
     },

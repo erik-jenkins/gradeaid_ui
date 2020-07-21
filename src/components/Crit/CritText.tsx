@@ -3,6 +3,7 @@ import React, { useEffect, useRef } from 'react';
 import { Form } from 'react-bootstrap';
 import sanitizeHtml from 'sanitize-html';
 import { Crit } from './critsSlice';
+import './CritText.scss';
 
 interface CritTextProps {
   crit: Crit;
@@ -14,7 +15,7 @@ interface CritTextProps {
 const parseAndSanitize = (text: string): string => {
   const dirty = marked(text);
   return sanitizeHtml(dirty, {
-    allowedTags: sanitizeHtml.defaults.allowedTags.concat(['h1', 'h2']),
+    allowedTags: sanitizeHtml.defaults.allowedTags.concat(['h1', 'h2', 'img']),
   });
 };
 
