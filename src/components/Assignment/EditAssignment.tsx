@@ -35,7 +35,23 @@ const EditAssignment = ({
               />
             </Form.Group>
 
-            <Form.Group controlId="form-mastery-points">
+            <Form.Group controlId="edit-assignment-max-score">
+              <Form.Label>Maximum possible score</Form.Label>
+              <Form.Control
+                type="number"
+                min={0}
+                placeholder="Enter maximum score."
+                value={editAssignment.maxScore}
+                onChange={(e) =>
+                  setEditAssignment({
+                    ...editAssignment,
+                    maxScore: +e.target.value,
+                  })
+                }
+              />
+            </Form.Group>
+
+            <Form.Group controlId="edit-assignment-mastery-points">
               <Form.Label>Mastery Points</Form.Label>
               <Form.Control
                 type="number"
@@ -51,6 +67,7 @@ const EditAssignment = ({
                 }
               />
             </Form.Group>
+
             <Form.Group controlId="edit-assignment-use-mastery">
               <Form.Check
                 type="checkbox"
