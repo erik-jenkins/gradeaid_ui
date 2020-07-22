@@ -1,14 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { DropResult } from 'react-beautiful-dnd';
-
-interface Assignment {
-  id: string;
-  name: string;
-  categoryIds: string[];
-  maxScore: number;
-  useMasteryScoring: boolean;
-  masteryPoints: number;
-}
+import { Assignment } from './types';
 
 interface AssignmentsState {
   assignmentsById: Record<string, Assignment>;
@@ -31,6 +23,12 @@ const assignmentsSlice = createSlice({
   name: 'assignments',
   initialState,
   reducers: {
+    updateAssignment(
+      state: AssignmentsState,
+      { payload: assignment }: PayloadAction<Assignment>
+    ) {
+      state.assignmentsById[assignment.id] = assignment;
+    },
     reorderCategories(
       state: AssignmentsState,
       { payload }: PayloadAction<DropResult>
@@ -52,6 +50,6 @@ const assignmentsSlice = createSlice({
   },
 });
 
-export const { reorderCategories } = assignmentsSlice.actions;
+export const { updateAssignment, reorderCategories } = assignmentsSlice.actions;
 
 export default assignmentsSlice.reducer;

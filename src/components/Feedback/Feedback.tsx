@@ -3,6 +3,7 @@ import { Droppable } from 'react-beautiful-dnd';
 import { Col, ListGroup, Row } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../app/store';
+import { Assignment } from '../Assignment/types';
 import { Crit } from '../Crit/types';
 import './Feedback.scss';
 import FeedbackControls from './FeedbackControls';
@@ -11,22 +12,22 @@ import FeedbackScore from './FeedbackScore';
 import FeedbackText from './FeedbackText';
 
 interface FeedbackProps {
-  maxScore: number;
-  computeScore: Function;
+  assignment: Assignment;
 }
 
-const Feedback: React.FC<FeedbackProps> = ({ maxScore, computeScore }) => {
+const Feedback: React.FC<FeedbackProps> = ({ assignment }) => {
   const feedbackCrits: Crit[] = useSelector((state: RootState) =>
     state.crits.feedbackCritIds.map((critId) => state.crits.critsById[critId])
   );
-
-  const currentScore = computeScore(feedbackCrits);
 
   return (
     <div className="sticky-top" style={{ top: '10px' }}>
       <Row className="mb-1">
         <Col>
-          <FeedbackScore maxScore={maxScore} currentScore={currentScore} />
+          <FeedbackScore
+            feedbackCrits={feedbackCrits}
+            assignment={assignment}
+          />
         </Col>
       </Row>
       <Row className="mb-1">

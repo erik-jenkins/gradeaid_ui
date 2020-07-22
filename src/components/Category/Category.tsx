@@ -21,7 +21,7 @@ const Category: React.FC<CategoryProps> = ({ id, index }: CategoryProps) => {
     <Draggable draggableId={id} index={index}>
       {(provided) => (
         <Card
-          className="mb-3"
+          className="mb-3 category"
           {...provided.draggableProps}
           ref={provided.innerRef}
         >

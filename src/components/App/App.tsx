@@ -12,7 +12,7 @@ function App() {
       <Container>
         <Switch>
           <Route path="/courses/:courseId/assignments/:assignmentId">
-            <Assignment id="assignment-1" />
+            <Assignment id="assignment-1" courseId="course-1" />
           </Route>
           <Route path="/courses/:courseId/assignments">
             <p>Assignments list for a given course</p>
