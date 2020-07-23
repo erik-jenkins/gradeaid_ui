@@ -13,7 +13,7 @@ const FeedbackText: React.FC<FeedbackTextProps> = ({ feedbackCrits }) => {
   return (
     <Form.Control
       as="textarea"
-      rows={5}
+      rows={10}
       placeholder="Feedback will appear here once added..."
       value={feedbackText}
       disabled

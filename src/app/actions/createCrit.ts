@@ -1,5 +1,3 @@
-// This file contains actions that multiple slices of state may react to.
-
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { Crit } from '../../components/Crit/types';
 import { RootState } from '../store';
@@ -9,7 +7,7 @@ interface CreateCritParams {
   categoryId: string;
 }
 
-interface CreateCritPayload {
+export interface CreateCritPayload {
   newCrit: Crit;
   categoryId: string;
 }

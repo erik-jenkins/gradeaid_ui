@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { DropResult } from 'react-beautiful-dnd';
+import { createCategory } from '../../app/actions/createCategory';
 import { Assignment } from './types';
 
 interface AssignmentsState {
@@ -48,6 +49,15 @@ const assignmentsSlice = createSlice({
       assignment.categoryIds.splice(destination.index, 0, categoryId);
     },
   },
+  extraReducers: (builder) =>
+    builder.addCase(
+      createCategory.fulfilled,
+      (state: AssignmentsState, { payload }) => {
+        const { newCategory, assignmentId } = payload;
+
+        state.assignmentsById[assignmentId].categoryIds.push(newCategory.id);
+      }
+    ),
 });
 
 export const { updateAssignment, reorderCategories } = assignmentsSlice.actions;

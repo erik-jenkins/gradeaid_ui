@@ -4,6 +4,7 @@ import { Col, Container, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../app/store';
 import Category from '../Category';
+import AddCategory from '../Category/AddCategory';
 import { reorderCrits } from '../Category/categoriesSlice';
 import { reorderFeedbackCrits } from '../Crit/critsSlice';
 import Feedback from '../Feedback';
@@ -36,7 +37,6 @@ const Assignment = ({ id, courseId }: AssignmentProps) => {
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <Container className="assignment-container">
-        <Row noGutters></Row>
         <Row>
           {/* Crit column */}
           <Col sm={12} md={8}>
@@ -51,6 +51,7 @@ const Assignment = ({ id, courseId }: AssignmentProps) => {
                 </div>
               )}
             </Droppable>
+            <AddCategory assignmentId={assignment.id} />
           </Col>
           {/* Feedback column */}
           <Col sm={12} md={4} className="column-feedback">

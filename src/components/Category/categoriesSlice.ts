@@ -1,22 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { DropResult } from 'react-beautiful-dnd';
+import { createCategory } from '../../app/actions/createCategory';
 import { createCrit } from '../../app/actions/createCrit';
 import { deleteCrit } from '../../app/actions/deleteCrit';
-import { Crit } from '../Crit/types';
-
-interface Category {
-  id: string;
-  name: string;
-  critIds: string[];
-}
+import { Category } from './types';
 
 interface CategoriesState {
   categoriesByID: Record<string, Category>;
-}
-
-interface AddCritToCategoryPayload {
-  crit: Crit;
-  categoryId: string;
+  allIds: string[];
 }
 
 const initialState: CategoriesState = {
@@ -32,19 +23,13 @@ const initialState: CategoriesState = {
       critIds: ['crit-6', 'crit-7', 'crit-8', 'crit-9', 'crit-10'],
     },
   },
+  allIds: ['category-1', 'category-2'],
 };
 
 const categoriesSlice = createSlice({
   name: 'categories',
   initialState,
   reducers: {
-    addCritToCategory(
-      state: CategoriesState,
-      { payload }: PayloadAction<AddCritToCategoryPayload>
-    ) {
-      const { crit, categoryId } = payload;
-      state.categoriesByID[categoryId].critIds.push(crit.id);
-    },
     reorderCrits(
       state: CategoriesState,
       { payload }: PayloadAction<DropResult>
@@ -71,6 +56,15 @@ const categoriesSlice = createSlice({
   },
   extraReducers: (builder) =>
     builder
+      .addCase(
+        createCategory.fulfilled,
+        (state: CategoriesState, { payload }) => {
+          const { newCategory } = payload;
+
+          state.categoriesByID[newCategory.id] = newCategory;
+          state.allIds.push(newCategory.id);
+        }
+      )
       .addCase(createCrit.fulfilled, (state: CategoriesState, { payload }) => {
         const { newCrit, categoryId } = payload;
 
@@ -85,6 +79,6 @@ const categoriesSlice = createSlice({
       }),
 });
 
-export const { addCritToCategory, reorderCrits } = categoriesSlice.actions;
+export const { reorderCrits } = categoriesSlice.actions;
 
 export default categoriesSlice.reducer;
