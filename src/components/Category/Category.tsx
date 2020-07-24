@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 import { Button, Card, ListGroup, ListGroupItem } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
+import { deleteCategory } from '../../app/actions/deleteCategory';
 import { editCategory as editCategoryAction } from '../../app/actions/editCategory';
 import { RootState } from '../../app/store';
 import CritListItem from '../Crit';
@@ -16,6 +17,11 @@ interface CategoryProps {
   showEditControls: boolean;
 }
 
+enum DeleteCategorySteps {
+  DELETE,
+  CONFIRM,
+}
+
 const Category: React.FC<CategoryProps> = ({
   id,
   index,
@@ -28,6 +34,9 @@ const Category: React.FC<CategoryProps> = ({
 
   const [editCategory, setEditCategory] = useState(category);
   const [showEditCategory, setShowEditCategory] = useState(false);
+  const [deleteCategoryStep, setDeleteCategoryStep] = useState(
+    DeleteCategorySteps.DELETE
+  );
   const dispatch = useDispatch();
 
   const onEditCategoryClick = () => setShowEditCategory(true);
@@ -42,6 +51,19 @@ const Category: React.FC<CategoryProps> = ({
     setShowEditCategory(false);
   };
 
+  const onDeleteCategoryClick = () => {
+    if (deleteCategoryStep === DeleteCategorySteps.DELETE) {
+      setDeleteCategoryStep(DeleteCategorySteps.CONFIRM);
+      return;
+    }
+
+    if (deleteCategoryStep === DeleteCategorySteps.CONFIRM) {
+      // dispatch the delete category action
+      dispatch(deleteCategory({ categoryId: id, assignmentId }));
+      setDeleteCategoryStep(DeleteCategorySteps.DELETE);
+    }
+  };
+
   return (
     <Draggable draggableId={id} index={index}>
       {(provided) => (
@@ -53,9 +75,28 @@ const Category: React.FC<CategoryProps> = ({
           <Card.Header {...provided.dragHandleProps}>
             <h4>{category.name}</h4>
             {showEditControls && (
-              <Button variant="light" size="sm" onClick={onEditCategoryClick}>
-                Edit category
-              </Button>
+              <div className="category-edit-controls">
+                <Button
+                  variant="light"
+                  size="sm"
+                  className="mr-1"
+                  onClick={onEditCategoryClick}
+                >
+                  Edit category
+                </Button>
+                <Button
+                  variant="light"
+                  size="sm"
+                  onClick={onDeleteCategoryClick}
+                  onBlur={() =>
+                    setDeleteCategoryStep(DeleteCategorySteps.DELETE)
+                  }
+                >
+                  {deleteCategoryStep === DeleteCategorySteps.DELETE
+                    ? 'Delete category'
+                    : 'Confirm'}
+                </Button>
+              </div>
             )}
           </Card.Header>
           <Card.Body>

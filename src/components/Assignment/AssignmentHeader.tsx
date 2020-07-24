@@ -39,40 +39,41 @@ const AssignmentHeader = ({
   };
 
   return (
-    <div className="assignment-header">
-      {showEditAssignment ? (
-        <EditAssignment
-          editAssignment={editAssignment}
-          setEditAssignment={setEditAssignment}
-          onSaveClick={onSaveClick}
-          onCancelClick={onCancelClick}
-        />
-      ) : (
-        <>
-          <div className="assignment-header-details">
-            <h1>{assignment.name}</h1>
-            <p className="text-muted">
-              from <a href={courseUrl}>Example Course</a>
-            </p>
-          </div>
-          <div className="assignment-header-controls">
-            {showEditControls && (
-              <Button variant="light" size="sm" onClick={onEditClick}>
-                Edit assignment
-              </Button>
-            )}
-            <Form.Check
-              type="switch"
-              id="custom-switch"
-              label="Show edit controls"
-              className="mr-2"
-              checked={showEditControls}
-              onChange={onShowEditControlsClick}
-            />
-          </div>
-        </>
-      )}
-    </div>
+    <>
+      <div className="assignment-header">
+        <div className="assignment-header-details">
+          <h1>{assignment.name}</h1>
+          <p className="text-muted">
+            from <a href={courseUrl}>Example Course</a>
+          </p>
+        </div>
+        <div className="assignment-header-controls">
+          {showEditControls && (
+            <Button variant="light" size="sm" onClick={onEditClick}>
+              Edit assignment
+            </Button>
+          )}
+          <Form.Check
+            type="switch"
+            id="custom-switch"
+            label="Show edit controls"
+            className="mr-2 mt-1"
+            checked={showEditControls}
+            onChange={onShowEditControlsClick}
+          />
+        </div>
+      </div>
+      <div className="edit-assignment-form mt-1 mb-1">
+        {showEditAssignment && (
+          <EditAssignment
+            editAssignment={editAssignment}
+            setEditAssignment={setEditAssignment}
+            onSaveClick={onSaveClick}
+            onCancelClick={onCancelClick}
+          />
+        )}
+      </div>
+    </>
   );
 };
 

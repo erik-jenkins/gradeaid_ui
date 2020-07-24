@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { DropResult } from 'react-beautiful-dnd';
 import { createCategory } from '../../app/actions/createCategory';
+import { deleteCategory } from '../../app/actions/deleteCategory';
 import { Assignment } from './types';
 
 interface AssignmentsState {
@@ -50,14 +51,27 @@ const assignmentsSlice = createSlice({
     },
   },
   extraReducers: (builder) =>
-    builder.addCase(
-      createCategory.fulfilled,
-      (state: AssignmentsState, { payload }) => {
-        const { newCategory, assignmentId } = payload;
+    builder
+      .addCase(
+        createCategory.fulfilled,
+        (state: AssignmentsState, { payload }) => {
+          const { newCategory, assignmentId } = payload;
 
-        state.assignmentsById[assignmentId].categoryIds.push(newCategory.id);
-      }
-    ),
+          state.assignmentsById[assignmentId].categoryIds.push(newCategory.id);
+        }
+      )
+      .addCase(
+        deleteCategory.fulfilled,
+        (state: AssignmentsState, { payload }) => {
+          const { deletedCategoryId, assignmentId } = payload;
+
+          state.assignmentsById[
+            assignmentId
+          ].categoryIds = state.assignmentsById[
+            assignmentId
+          ].categoryIds.filter((id) => id !== deletedCategoryId);
+        }
+      ),
 });
 
 export const { updateAssignment, reorderCategories } = assignmentsSlice.actions;

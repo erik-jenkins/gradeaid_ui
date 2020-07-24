@@ -63,10 +63,6 @@ const ShowCrit: React.FC<ShowCritProps> = ({
     }
   };
 
-  const resetDeleteState = () => {
-    setTimeout(() => setDeleteCritStep(DeleteCritSteps.DELETE), 3000);
-  };
-
   return (
     <div className="show-crit">
       <div
@@ -123,7 +119,6 @@ const ShowCrit: React.FC<ShowCritProps> = ({
                 size="sm"
                 onClick={onDeleteClick}
                 onBlur={() => setDeleteCritStep(DeleteCritSteps.DELETE)}
-                onMouseLeave={resetDeleteState}
               >
                 {deleteCritStep === DeleteCritSteps.DELETE
                   ? 'Delete'

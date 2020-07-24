@@ -25,7 +25,7 @@ const EditAssignment = ({
         <Card.Text className="mb-2">
           <Form>
             <Form.Group controlId="edit-assignment-name">
-              <Form.Label>Assignment name</Form.Label>
+              <Form.Label className="text-muted">Assignment name</Form.Label>
               <Form.Control
                 placeholder="Enter assignment name."
                 value={editAssignment.name}
@@ -36,7 +36,9 @@ const EditAssignment = ({
             </Form.Group>
 
             <Form.Group controlId="edit-assignment-max-score">
-              <Form.Label>Maximum possible score</Form.Label>
+              <Form.Label className="text-muted">
+                Maximum possible score
+              </Form.Label>
               <Form.Control
                 type="number"
                 min={0}
@@ -51,28 +53,14 @@ const EditAssignment = ({
               />
             </Form.Group>
 
-            <Form.Group controlId="edit-assignment-mastery-points">
-              <Form.Label>Mastery Points</Form.Label>
-              <Form.Control
-                type="number"
-                min={0}
-                placeholder="Enter number of mastery points."
-                value={editAssignment.masteryPoints}
-                disabled={!editAssignment.useMasteryScoring}
-                onChange={(e) =>
-                  setEditAssignment({
-                    ...editAssignment,
-                    masteryPoints: +e.target.value,
-                  })
-                }
-              />
-            </Form.Group>
+            <hr />
 
             <Form.Group controlId="edit-assignment-use-mastery">
               <Form.Check
                 type="checkbox"
                 label="Use mastery scoring"
                 checked={editAssignment.useMasteryScoring}
+                className="text-muted"
                 onChange={() =>
                   setEditAssignment({
                     ...editAssignment,
@@ -81,6 +69,25 @@ const EditAssignment = ({
                 }
               />
             </Form.Group>
+
+            {editAssignment.useMasteryScoring && (
+              <Form.Group controlId="edit-assignment-mastery-points">
+                <Form.Label>Mastery Points</Form.Label>
+                <Form.Control
+                  type="number"
+                  min={0}
+                  placeholder="Enter number of mastery points."
+                  value={editAssignment.masteryPoints}
+                  disabled={!editAssignment.useMasteryScoring}
+                  onChange={(e) =>
+                    setEditAssignment({
+                      ...editAssignment,
+                      masteryPoints: +e.target.value,
+                    })
+                  }
+                />
+              </Form.Group>
+            )}
 
             <div className="edit-assignment-controls">
               <Button variant="light mr-1" size="sm" onClick={onSaveClick}>

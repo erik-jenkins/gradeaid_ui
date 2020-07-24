@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { DropResult } from 'react-beautiful-dnd';
 import { createCategory } from '../../app/actions/createCategory';
 import { createCrit } from '../../app/actions/createCrit';
+import { deleteCategory } from '../../app/actions/deleteCategory';
 import { deleteCrit } from '../../app/actions/deleteCrit';
 import { editCategory } from '../../app/actions/editCategory';
 import { Category } from './types';
@@ -72,6 +73,15 @@ const categoriesSlice = createSlice({
           const { updatedCategory } = payload;
 
           state.categoriesByID[updatedCategory.id] = updatedCategory;
+        }
+      )
+      .addCase(
+        deleteCategory.fulfilled,
+        (state: CategoriesState, { payload }) => {
+          const { deletedCategoryId } = payload;
+
+          delete state.categoriesByID[deletedCategoryId];
+          state.allIds = state.allIds.filter((id) => id !== deletedCategoryId);
         }
       )
       .addCase(createCrit.fulfilled, (state: CategoriesState, { payload }) => {

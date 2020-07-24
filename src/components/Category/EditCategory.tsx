@@ -17,6 +17,7 @@ const EditCategory = ({
 }: EditCategoryProps) => {
   return (
     <ListGroup.Item variant="secondary">
+      <h4>Edit Category</h4>
       <Form>
         <Form.Group controlId="edit-category-name">
           <Form.Label>Category name</Form.Label>
