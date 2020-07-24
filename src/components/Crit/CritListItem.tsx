@@ -7,17 +7,19 @@ import { setCrit } from './critsSlice';
 import EditCrit from './EditCrit';
 import ShowCrit from './ShowCrit';
 
-interface CritProps {
+interface CritListItemProps {
   id: string;
   index: number;
   categoryId: string;
+  showEditControls: boolean;
 }
 
-const CritListItem: React.FC<CritProps> = ({
+const CritListItem: React.FC<CritListItemProps> = ({
   id,
   index,
   categoryId,
-}: CritProps) => {
+  showEditControls,
+}: CritListItemProps) => {
   const crit = useSelector((state: RootState) => state.crits.critsById[id]);
   const [showEditForm, setShowEditForm] = useState(false);
   const [editCrit, setEditCrit] = useState(crit);
@@ -70,6 +72,7 @@ const CritListItem: React.FC<CritProps> = ({
               crit={crit}
               setShowEditForm={setShowEditForm}
               categoryId={categoryId}
+              showEditControls={showEditControls}
             />
           )}
         </ListGroup.Item>

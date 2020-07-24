@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Button, Card, Form } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { createCategory } from '../../app/actions/createCategory';
+import './AddCategory.scss';
 import { Category } from './types';
 
 interface AddCategoryProps {
@@ -55,10 +56,10 @@ const AddCategory = ({ assignmentId }: AddCategoryProps) => {
               </Form.Group>
 
               <div className="edit-category-controls">
-                <Button variant="success mr-1" size="sm" onClick={onSaveClick}>
+                <Button variant="light mr-1" size="sm" onClick={onSaveClick}>
                   Save
                 </Button>
-                <Button variant="danger" size="sm" onClick={onCancelClick}>
+                <Button variant="light" size="sm" onClick={onCancelClick}>
                   Cancel
                 </Button>
               </div>

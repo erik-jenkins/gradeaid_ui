@@ -83,10 +83,10 @@ const EditAssignment = ({
             </Form.Group>
 
             <div className="edit-assignment-controls">
-              <Button variant="success mr-1" size="sm" onClick={onSaveClick}>
+              <Button variant="light mr-1" size="sm" onClick={onSaveClick}>
                 Save
               </Button>
-              <Button variant="danger" size="sm" onClick={onCancelClick}>
+              <Button variant="light" size="sm" onClick={onCancelClick}>
                 Cancel
               </Button>
             </div>

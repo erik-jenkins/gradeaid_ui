@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import { Col, Container, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
@@ -18,11 +18,14 @@ interface AssignmentProps {
 }
 
 const Assignment = ({ id, courseId }: AssignmentProps) => {
+  const [showEditControls, setShowEditControls] = useState(false);
   const dispatch = useDispatch();
 
   const assignment = useSelector(
     (state: RootState) => state.assignments.assignmentsById[id]
   );
+
+  const onShowEditControlsClick = () => setShowEditControls(!showEditControls);
 
   const onDragEnd = (result: DropResult) => {
     if (result.type === 'crit') {
@@ -40,18 +43,29 @@ const Assignment = ({ id, courseId }: AssignmentProps) => {
         <Row>
           {/* Crit column */}
           <Col sm={12} md={8}>
-            <AssignmentHeader assignment={assignment} courseId={courseId} />
+            <AssignmentHeader
+              assignment={assignment}
+              courseId={courseId}
+              showEditControls={showEditControls}
+              onShowEditControlsClick={onShowEditControlsClick}
+            />
             <Droppable droppableId={id} type="category">
               {(provided) => (
                 <div {...provided.droppableProps} ref={provided.innerRef}>
                   {assignment.categoryIds.map((categoryId, index) => (
-                    <Category key={categoryId} id={categoryId} index={index} />
+                    <Category
+                      key={categoryId}
+                      id={categoryId}
+                      index={index}
+                      assignmentId={id}
+                      showEditControls={showEditControls}
+                    />
                   ))}
                   {provided.placeholder}
                 </div>
               )}
             </Droppable>
-            <AddCategory assignmentId={assignment.id} />
+            {showEditControls && <AddCategory assignmentId={assignment.id} />}
           </Col>
           {/* Feedback column */}
           <Col sm={12} md={4} className="column-feedback">

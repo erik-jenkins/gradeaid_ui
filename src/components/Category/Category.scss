@@ -4,6 +4,14 @@
   }
 }
 
-.category > .card-body {
-  padding: 0;
+.category {
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem;
+  }
+
+  .card-body {
+    padding: 0;
+  }
 }

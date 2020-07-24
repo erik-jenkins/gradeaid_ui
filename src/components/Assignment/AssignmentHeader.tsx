@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Button } from 'react-bootstrap';
+import { Button, Form } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
+import './AssignmentHeader.scss';
 import { updateAssignment } from './assignmentsSlice';
 import EditAssignment from './EditAssignment';
 import { Assignment } from './types';
@@ -8,9 +9,16 @@ import { Assignment } from './types';
 interface AssignmentHeaderProps {
   assignment: Assignment;
   courseId: string;
+  showEditControls: boolean;
+  onShowEditControlsClick: () => void;
 }
 
-const AssignmentHeader = ({ assignment, courseId }: AssignmentHeaderProps) => {
+const AssignmentHeader = ({
+  assignment,
+  courseId,
+  showEditControls,
+  onShowEditControlsClick,
+}: AssignmentHeaderProps) => {
   const [editAssignment, setEditAssignment] = useState(assignment);
   const [showEditAssignment, setShowEditAssignment] = useState(false);
   const dispatch = useDispatch();
@@ -48,9 +56,19 @@ const AssignmentHeader = ({ assignment, courseId }: AssignmentHeaderProps) => {
             </p>
           </div>
           <div className="assignment-header-controls">
-            <Button variant="warning" size="sm" onClick={onEditClick}>
-              Edit
-            </Button>
+            {showEditControls && (
+              <Button variant="light" size="sm" onClick={onEditClick}>
+                Edit assignment
+              </Button>
+            )}
+            <Form.Check
+              type="switch"
+              id="custom-switch"
+              label="Show edit controls"
+              className="mr-2"
+              checked={showEditControls}
+              onChange={onShowEditControlsClick}
+            />
           </div>
         </>
       )}

@@ -1,21 +1,46 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
-import { Card, ListGroup, ListGroupItem } from 'react-bootstrap';
-import { useSelector } from 'react-redux';
+import { Button, Card, ListGroup, ListGroupItem } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
+import { editCategory as editCategoryAction } from '../../app/actions/editCategory';
 import { RootState } from '../../app/store';
 import CritListItem from '../Crit';
 import AddCrit from '../Crit/AddCrit';
 import './Category.scss';
+import EditCategory from './EditCategory';
 
 interface CategoryProps {
   id: string;
   index: number;
+  assignmentId: string;
+  showEditControls: boolean;
 }
 
-const Category: React.FC<CategoryProps> = ({ id, index }: CategoryProps) => {
+const Category: React.FC<CategoryProps> = ({
+  id,
+  index,
+  assignmentId,
+  showEditControls,
+}: CategoryProps) => {
   const category = useSelector(
     (state: RootState) => state.categories.categoriesByID[id]
   );
+
+  const [editCategory, setEditCategory] = useState(category);
+  const [showEditCategory, setShowEditCategory] = useState(false);
+  const dispatch = useDispatch();
+
+  const onEditCategoryClick = () => setShowEditCategory(true);
+
+  const onSaveCategoryClick = () => {
+    dispatch(editCategoryAction({ category: editCategory }));
+    setShowEditCategory(false);
+  };
+
+  const onCancelCategoryClick = () => {
+    setEditCategory(category);
+    setShowEditCategory(false);
+  };
 
   return (
     <Draggable draggableId={id} index={index}>
@@ -27,11 +52,24 @@ const Category: React.FC<CategoryProps> = ({ id, index }: CategoryProps) => {
         >
           <Card.Header {...provided.dragHandleProps}>
             <h4>{category.name}</h4>
+            {showEditControls && (
+              <Button variant="light" size="sm" onClick={onEditCategoryClick}>
+                Edit category
+              </Button>
+            )}
           </Card.Header>
           <Card.Body>
             <Droppable droppableId={id} type="crit">
               {(provided) => (
                 <ListGroup ref={provided.innerRef} {...provided.droppableProps}>
+                  {showEditCategory && (
+                    <EditCategory
+                      editCategory={editCategory}
+                      setEditCategory={setEditCategory}
+                      onSaveClick={onSaveCategoryClick}
+                      onCancelClick={onCancelCategoryClick}
+                    />
+                  )}
                   {category.critIds.length > 0 ? (
                     category.critIds.map((critId, index) => (
                       <CritListItem
@@ -39,6 +77,7 @@ const Category: React.FC<CategoryProps> = ({ id, index }: CategoryProps) => {
                         key={critId}
                         index={index}
                         categoryId={id}
+                        showEditControls={showEditControls}
                       />
                     ))
                   ) : (
@@ -47,7 +86,7 @@ const Category: React.FC<CategoryProps> = ({ id, index }: CategoryProps) => {
                     </ListGroupItem>
                   )}
                   {provided.placeholder}
-                  <AddCrit categoryId={id} />
+                  {showEditControls && <AddCrit categoryId={id} />}
                 </ListGroup>
               )}
             </Droppable>

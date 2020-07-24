@@ -1,0 +1,13 @@
+.assignment-header-controls {
+  display: flex;
+  flex-direction: column;
+
+  .custom-switch {
+    display: flex;
+    align-items: center;
+  }
+
+  .custom-control-label {
+    padding-top: 2px;
+  }
+}

@@ -74,14 +74,14 @@ const EditCrit = ({
         <div className="crit-edit-save">
           <Button
             type="submit"
-            variant="success"
+            variant="light"
             size="sm"
             className="mr-1"
             onClick={onSaveClick}
           >
             Save
           </Button>
-          <Button variant="danger" size="sm" onClick={onCancelClick}>
+          <Button variant="light" size="sm" onClick={onCancelClick}>
             Cancel
           </Button>
         </div>

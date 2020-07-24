@@ -7,7 +7,11 @@ div.assignment-container {
   justify-content: space-between;
   align-items: flex-end;
   width: 100%;
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.5rem;
+
+  .assignment-header-controls {
+    display: flex;
+  }
 
   h1 {
     margin-bottom: 0;
