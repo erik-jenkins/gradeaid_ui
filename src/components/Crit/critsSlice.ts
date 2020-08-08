@@ -57,7 +57,7 @@ const initialState: CritsState = {
     },
     'crit-4': {
       id: 'crit-4',
-      text: loremIpsum(),
+      text: 'Test without punctuation',
       pointValue: 1,
       occurs: 0,
       isComment: false,

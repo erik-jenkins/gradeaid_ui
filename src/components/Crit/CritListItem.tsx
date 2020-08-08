@@ -51,7 +51,11 @@ const CritListItem: React.FC<CritListItemProps> = ({
   };
 
   return (
-    <Draggable draggableId={crit.id} index={index}>
+    <Draggable
+      draggableId={crit.id}
+      index={index}
+      isDragDisabled={!showEditControls}
+    >
       {(provided, snapshot) => (
         <ListGroup.Item
           variant={computeListGroupItemVariant(snapshot.isDragging)}

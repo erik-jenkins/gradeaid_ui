@@ -65,7 +65,11 @@ const Category: React.FC<CategoryProps> = ({
   };
 
   return (
-    <Draggable draggableId={id} index={index}>
+    <Draggable
+      draggableId={id}
+      index={index}
+      isDragDisabled={!showEditControls}
+    >
       {(provided) => (
         <Card
           className="mb-3 category"
