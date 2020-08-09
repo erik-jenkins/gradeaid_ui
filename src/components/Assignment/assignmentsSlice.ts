@@ -6,19 +6,29 @@ import { Assignment } from './types';
 
 interface AssignmentsState {
   assignmentsById: Record<string, Assignment>;
+  allIds: string[];
 }
 
 const initialState: AssignmentsState = {
   assignmentsById: {
-    'assignment-1': {
-      id: 'assignment-1',
+    '1': {
+      id: '1',
       name: 'Example Assignment 1',
-      categoryIds: ['category-1', 'category-2'],
+      categoryIds: ['1', '2'],
       maxScore: 100,
       useMasteryScoring: true,
       masteryPoints: 2,
     },
+    '2': {
+      id: '2',
+      name: 'Example Assignment 2',
+      categoryIds: [],
+      maxScore: 12,
+      useMasteryScoring: true,
+      masteryPoints: 2,
+    },
   },
+  allIds: ['1', '2'],
 };
 
 const assignmentsSlice = createSlice({

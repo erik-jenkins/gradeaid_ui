@@ -7,7 +7,7 @@ const Navbar = () => {
   return (
     <Nb expand="lg" variant="dark" bg="primary" className="navbar">
       <Container>
-        <Nb.Brand href="#home">GradeAid</Nb.Brand>
+        <Nb.Brand href="/">GradeAid</Nb.Brand>
         <Nb.Toggle aria-controls="basic-navbar-nav" />
         <Nb.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">

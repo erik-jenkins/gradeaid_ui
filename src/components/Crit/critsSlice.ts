@@ -34,89 +34,78 @@ $$x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}$$
 
 const initialState: CritsState = {
   critsById: {
-    'crit-1': {
-      id: 'crit-1',
+    '1': {
+      id: '1',
       text: exampleComment,
       pointValue: 1,
       occurs: 0,
       isComment: true,
     },
-    'crit-2': {
-      id: 'crit-2',
+    '2': {
+      id: '2',
       text: 'This is a question?',
       pointValue: 5,
       occurs: 0,
       isComment: false,
     },
-    'crit-3': {
-      id: 'crit-3',
+    '3': {
+      id: '3',
       text: "I'm upset about something!!!",
       pointValue: 1,
       occurs: 0,
       isComment: false,
     },
-    'crit-4': {
-      id: 'crit-4',
+    '4': {
+      id: '4',
       text: 'Test without punctuation',
       pointValue: 1,
       occurs: 0,
       isComment: false,
     },
-    'crit-5': {
-      id: 'crit-5',
+    '5': {
+      id: '5',
       text: loremIpsum(),
       pointValue: 1,
       occurs: 0,
       isComment: false,
     },
-    'crit-6': {
-      id: 'crit-6',
+    '6': {
+      id: '6',
       text: loremIpsum(),
       pointValue: 1,
       occurs: 0,
       isComment: false,
     },
-    'crit-7': {
-      id: 'crit-7',
+    '7': {
+      id: '7',
       text: loremIpsum(),
       pointValue: 1,
       occurs: 0,
       isComment: false,
     },
-    'crit-8': {
-      id: 'crit-8',
+    '8': {
+      id: '8',
       text: loremIpsum(),
       pointValue: 1,
       occurs: 0,
       isComment: false,
     },
-    'crit-9': {
-      id: 'crit-9',
+    '9': {
+      id: '9',
       text: loremIpsum(),
       pointValue: 1,
       occurs: 0,
       isComment: false,
     },
-    'crit-10': {
-      id: 'crit-10',
+    '10': {
+      id: '10',
       text: loremIpsum(),
       pointValue: 1,
       occurs: 0,
       isComment: false,
     },
   },
-  allIds: [
-    'crit-1',
-    'crit-2',
-    'crit-3',
-    'crit-4',
-    'crit-5',
-    'crit-6',
-    'crit-7',
-    'crit-8',
-    'crit-9',
-    'crit-10',
-  ],
+  allIds: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
   feedbackCritIds: [],
 };
 
