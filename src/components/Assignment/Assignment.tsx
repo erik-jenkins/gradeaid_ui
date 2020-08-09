@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import { Col, Container, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import { RootState } from '../../app/store';
 import Category from '../Category';
 import AddCategory from '../Category/AddCategory';
@@ -12,17 +13,14 @@ import './Assignment.scss';
 import AssignmentHeader from './AssignmentHeader';
 import { reorderCategories } from './assignmentsSlice';
 
-interface AssignmentProps {
-  id: string;
-  courseId: string;
-}
+const Assignment = () => {
+  const { courseId, assignmentId } = useParams();
 
-const Assignment = ({ id, courseId }: AssignmentProps) => {
   const [showEditControls, setShowEditControls] = useState(false);
   const dispatch = useDispatch();
 
   const assignment = useSelector(
-    (state: RootState) => state.assignments.assignmentsById[id]
+    (state: RootState) => state.assignments.assignmentsById[assignmentId]
   );
 
   const onShowEditControlsClick = () => setShowEditControls(!showEditControls);
@@ -49,15 +47,20 @@ const Assignment = ({ id, courseId }: AssignmentProps) => {
               showEditControls={showEditControls}
               onShowEditControlsClick={onShowEditControlsClick}
             />
-            <Droppable droppableId={id} type="category">
+            <Droppable droppableId={assignmentId} type="category">
               {(provided) => (
                 <div {...provided.droppableProps} ref={provided.innerRef}>
+                  {assignment.categoryIds.length === 0 && !showEditControls && (
+                    <p>
+                      There's nothing here yet... add a category to get started!
+                    </p>
+                  )}
                   {assignment.categoryIds.map((categoryId, index) => (
                     <Category
                       key={categoryId}
                       id={categoryId}
                       index={index}
-                      assignmentId={id}
+                      assignmentId={assignmentId}
                       showEditControls={showEditControls}
                     />
                   ))}

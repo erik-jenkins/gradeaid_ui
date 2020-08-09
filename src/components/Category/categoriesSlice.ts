@@ -14,18 +14,18 @@ interface CategoriesState {
 
 const initialState: CategoriesState = {
   categoriesByID: {
-    'category-1': {
-      id: 'category-1',
+    '1': {
+      id: '1',
       name: 'General Requirements',
-      critIds: ['crit-1', 'crit-2', 'crit-3', 'crit-4', 'crit-5'],
+      critIds: ['1', '2', '3', '4', '5'],
     },
-    'category-2': {
-      id: 'category-2',
+    '2': {
+      id: '2',
       name: 'Code Style',
-      critIds: ['crit-6', 'crit-7', 'crit-8', 'crit-9', 'crit-10'],
+      critIds: ['6', '7', '8', '9', '10'],
     },
   },
-  allIds: ['category-1', 'category-2'],
+  allIds: ['1', '2'],
 };
 
 const categoriesSlice = createSlice({
