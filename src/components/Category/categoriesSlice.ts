@@ -5,7 +5,8 @@ import { createCrit } from '../../app/actions/createCrit';
 import { deleteCategory } from '../../app/actions/deleteCategory';
 import { deleteCrit } from '../../app/actions/deleteCrit';
 import { editCategory } from '../../app/actions/editCategory';
-import { Category } from './types';
+import { stripDndId as stripCritDndId } from '../Crit/types';
+import { Category, stripDndId as stripCategoryDndId } from './types';
 
 interface CategoriesState {
   categoriesByID: Record<string, Category>;
@@ -36,23 +37,27 @@ const categoriesSlice = createSlice({
       state: CategoriesState,
       { payload }: PayloadAction<DropResult>
     ) {
-      const { source, destination, draggableId: critId } = payload;
+      const { source, destination, draggableId } = payload;
+      const critId = stripCritDndId(draggableId);
+      const sourceCategoryId = stripCategoryDndId(source.droppableId);
 
       if (!destination) {
         return;
       }
 
+      const destCategoryId = stripCategoryDndId(destination.droppableId);
+
       if (
-        source.droppableId === destination.droppableId &&
+        sourceCategoryId === destCategoryId &&
         source.index === destination.index
       ) {
         return;
       }
 
-      const sourceCategory = state.categoriesByID[source.droppableId];
+      const sourceCategory = state.categoriesByID[sourceCategoryId];
       sourceCategory.critIds.splice(source.index, 1);
 
-      const destCategory = state.categoriesByID[destination.droppableId];
+      const destCategory = state.categoriesByID[destCategoryId];
       destCategory.critIds.splice(destination.index, 0, critId);
     },
   },

@@ -6,6 +6,7 @@ import { RootState } from '../../app/store';
 import { setCrit } from './critsSlice';
 import EditCrit from './EditCrit';
 import ShowCrit from './ShowCrit';
+import { getDndId } from './types';
 
 interface CritListItemProps {
   id: string;
@@ -52,7 +53,7 @@ const CritListItem: React.FC<CritListItemProps> = ({
 
   return (
     <Draggable
-      draggableId={crit.id}
+      draggableId={getDndId(crit)}
       index={index}
       isDragDisabled={!showEditControls}
     >

@@ -16,7 +16,7 @@ const Course = () => {
   );
 
   return (
-    <Container className="course-container">
+    <Container className="course-container p-0">
       <Row>
         {/* Sidebar with description */}
         <Col sm={12} md={4}>

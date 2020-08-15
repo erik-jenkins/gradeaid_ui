@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { DropResult } from 'react-beautiful-dnd';
 import { createCategory } from '../../app/actions/createCategory';
 import { deleteCategory } from '../../app/actions/deleteCategory';
+import { stripDndId } from '../Category/types';
 import { Assignment } from './types';
 
 interface AssignmentsState {
@@ -45,7 +46,8 @@ const assignmentsSlice = createSlice({
       state: AssignmentsState,
       { payload }: PayloadAction<DropResult>
     ) {
-      const { source, destination, draggableId: categoryId } = payload;
+      const { source, destination, draggableId } = payload;
+      const categoryId = stripDndId(draggableId);
 
       if (!destination) {
         return;

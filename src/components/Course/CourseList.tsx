@@ -9,7 +9,7 @@ const CourseList = () => {
   );
 
   return (
-    <Container className="courselist-container">
+    <Container className="courselist-container p-0">
       <Row>
         {/* Search/filter sidebar */}
         <Col sm={12} md={4}>

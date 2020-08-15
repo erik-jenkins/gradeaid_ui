@@ -9,6 +9,7 @@ import CritListItem from '../Crit';
 import AddCrit from '../Crit/AddCrit';
 import './Category.scss';
 import EditCategory from './EditCategory';
+import { getDndId } from './types';
 
 interface CategoryProps {
   id: string;
@@ -66,7 +67,7 @@ const Category: React.FC<CategoryProps> = ({
 
   return (
     <Draggable
-      draggableId={id}
+      draggableId={getDndId(category)}
       index={index}
       isDragDisabled={!showEditControls}
     >
@@ -104,7 +105,7 @@ const Category: React.FC<CategoryProps> = ({
             )}
           </Card.Header>
           <Card.Body>
-            <Droppable droppableId={id} type="crit">
+            <Droppable droppableId={getDndId(category)} type="crit">
               {(provided) => (
                 <ListGroup ref={provided.innerRef} {...provided.droppableProps}>
                   {showEditCategory && (
