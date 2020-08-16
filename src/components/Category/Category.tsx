@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { deleteCategory } from '../../app/actions/deleteCategory';
 import { editCategory as editCategoryAction } from '../../app/actions/editCategory';
 import { RootState } from '../../app/store';
+import ConfirmButton from '../ConfirmButton';
 import CritListItem from '../Crit';
 import AddCrit from '../Crit/AddCrit';
 import './Category.scss';
@@ -16,11 +17,6 @@ interface CategoryProps {
   index: number;
   assignmentId: string;
   showEditControls: boolean;
-}
-
-enum DeleteCategorySteps {
-  DELETE,
-  CONFIRM,
 }
 
 const Category: React.FC<CategoryProps> = ({
@@ -35,9 +31,6 @@ const Category: React.FC<CategoryProps> = ({
 
   const [editCategory, setEditCategory] = useState(category);
   const [showEditCategory, setShowEditCategory] = useState(false);
-  const [deleteCategoryStep, setDeleteCategoryStep] = useState(
-    DeleteCategorySteps.DELETE
-  );
   const dispatch = useDispatch();
 
   const onEditCategoryClick = () => setShowEditCategory(true);
@@ -53,16 +46,7 @@ const Category: React.FC<CategoryProps> = ({
   };
 
   const onDeleteCategoryClick = () => {
-    if (deleteCategoryStep === DeleteCategorySteps.DELETE) {
-      setDeleteCategoryStep(DeleteCategorySteps.CONFIRM);
-      return;
-    }
-
-    if (deleteCategoryStep === DeleteCategorySteps.CONFIRM) {
-      // dispatch the delete category action
-      dispatch(deleteCategory({ categoryId: id, assignmentId }));
-      setDeleteCategoryStep(DeleteCategorySteps.DELETE);
-    }
+    dispatch(deleteCategory({ categoryId: id, assignmentId }));
   };
 
   return (
@@ -89,18 +73,16 @@ const Category: React.FC<CategoryProps> = ({
                 >
                   Edit category
                 </Button>
-                <Button
-                  variant="light"
-                  size="sm"
-                  onClick={onDeleteCategoryClick}
-                  onBlur={() =>
-                    setDeleteCategoryStep(DeleteCategorySteps.DELETE)
-                  }
-                >
-                  {deleteCategoryStep === DeleteCategorySteps.DELETE
-                    ? 'Delete category'
-                    : 'Confirm'}
-                </Button>
+                <ConfirmButton
+                  defaultStateText="Delete Category"
+                  confirmStateText="Confirm"
+                  onConfirmClick={onDeleteCategoryClick}
+                  resetOnMouseBlur
+                  buttonProps={{
+                    variant: 'light',
+                    size: 'sm',
+                  }}
+                />
               </div>
             )}
           </Card.Header>

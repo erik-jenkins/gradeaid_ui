@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { DropResult } from 'react-beautiful-dnd';
 import { createCategory } from '../../app/actions/createCategory';
 import { deleteCategory } from '../../app/actions/deleteCategory';
+import { editAssignment } from '../../app/actions/editAssignment';
 import { stripDndId } from '../Category/types';
 import { Assignment } from './types';
 
@@ -64,6 +65,14 @@ const assignmentsSlice = createSlice({
   },
   extraReducers: (builder) =>
     builder
+      .addCase(
+        editAssignment.fulfilled,
+        (state: AssignmentsState, { payload }) => {
+          const { updatedAssignment } = payload;
+
+          state.assignmentsById[updatedAssignment.id] = updatedAssignment;
+        }
+      )
       .addCase(
         createCategory.fulfilled,
         (state: AssignmentsState, { payload }) => {

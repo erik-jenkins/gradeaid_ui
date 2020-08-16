@@ -1,9 +1,10 @@
 import marked from 'marked';
-import React, { useState } from 'react';
+import React from 'react';
 import { Button } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import sanitizeHtml from 'sanitize-html';
 import { deleteCrit } from '../../app/actions/deleteCrit';
+import ConfirmButton from '../ConfirmButton';
 import { addFeedbackCrit, removeFeedbackCrit } from './critsSlice';
 import './ShowCrit.scss';
 import { Crit } from './types';
@@ -22,11 +23,6 @@ interface ShowCritProps {
   showEditControls: boolean;
 }
 
-enum DeleteCritSteps {
-  DELETE,
-  CONFIRM,
-}
-
 const ShowCrit: React.FC<ShowCritProps> = ({
   crit,
   setShowEditForm,
@@ -34,7 +30,6 @@ const ShowCrit: React.FC<ShowCritProps> = ({
   showEditControls,
 }) => {
   const dispatch = useDispatch();
-  const [deleteCritStep, setDeleteCritStep] = useState(DeleteCritSteps.DELETE);
 
   const critHtml = parseAndSanitize(crit.text);
 
@@ -51,16 +46,7 @@ const ShowCrit: React.FC<ShowCritProps> = ({
   };
 
   const onDeleteClick = () => {
-    if (deleteCritStep === DeleteCritSteps.DELETE) {
-      setDeleteCritStep(DeleteCritSteps.CONFIRM);
-      return;
-    }
-
-    if (deleteCritStep === DeleteCritSteps.CONFIRM) {
-      // dispatch the delete request
-      dispatch(deleteCrit({ critId: crit.id, categoryId }));
-      setDeleteCritStep(DeleteCritSteps.DELETE);
-    }
+    dispatch(deleteCrit({ critId: crit.id, categoryId }));
   };
 
   return (
@@ -114,16 +100,16 @@ const ShowCrit: React.FC<ShowCritProps> = ({
               >
                 Edit
               </Button>
-              <Button
-                variant="light"
-                size="sm"
-                onClick={onDeleteClick}
-                onBlur={() => setDeleteCritStep(DeleteCritSteps.DELETE)}
-              >
-                {deleteCritStep === DeleteCritSteps.DELETE
-                  ? 'Delete'
-                  : 'Confirm'}
-              </Button>
+              <ConfirmButton
+                defaultStateText="Delete"
+                confirmStateText="Confirm"
+                onConfirmClick={onDeleteClick}
+                resetOnMouseBlur
+                buttonProps={{
+                  variant: 'light',
+                  size: 'sm',
+                }}
+              />
             </>
           )}
         </div>
