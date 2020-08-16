@@ -18,10 +18,17 @@ const Course = () => {
   return (
     <Container className="course-container p-0">
       <Row>
+        <Col>
+          <h1 className="mb-0">{course.name}</h1>
+          <p className="text-muted">
+            return to <a href="/">Course List</a>
+          </p>
+          <hr />
+        </Col>
+      </Row>
+      <Row>
         {/* Sidebar with description */}
         <Col sm={12} md={4}>
-          <h1>{course.name}</h1>
-          <hr />
           <p>{course.description}</p>
         </Col>
         {/* Assignment list */}

@@ -39,14 +39,19 @@ const Assignment = () => {
     <DragDropContext onDragEnd={onDragEnd}>
       <Container className="assignment-container">
         <Row>
-          {/* Crit column */}
-          <Col sm={12} md={8}>
+          <Col>
             <AssignmentHeader
               assignment={assignment}
               courseId={courseId}
               showEditControls={showEditControls}
               onShowEditControlsClick={onShowEditControlsClick}
             />
+            <hr />
+          </Col>
+        </Row>
+        <Row>
+          {/* Crit column */}
+          <Col sm={12} md={8}>
             <Droppable droppableId={assignmentId} type="category">
               {(provided) => (
                 <div {...provided.droppableProps} ref={provided.innerRef}>

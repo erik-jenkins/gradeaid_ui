@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../app/store';
 import './AssignmentHeader.scss';
 import { updateAssignment } from './assignmentsSlice';
 import EditAssignment from './EditAssignment';
@@ -23,6 +24,9 @@ const AssignmentHeader = ({
   const [showEditAssignment, setShowEditAssignment] = useState(false);
   const dispatch = useDispatch();
 
+  const courseName = useSelector(
+    (state: RootState) => state.courses.coursesById[courseId].name
+  );
   const courseUrl = `/courses/${courseId.replace('course-', '')}`;
 
   const onEditClick = () => setShowEditAssignment(true);
@@ -44,7 +48,7 @@ const AssignmentHeader = ({
         <div className="assignment-header-details">
           <h1>{assignment.name}</h1>
           <p className="text-muted">
-            from <a href={courseUrl}>Example Course</a>
+            from <a href={courseUrl}>{courseName}</a>
           </p>
         </div>
         <div className="assignment-header-controls">

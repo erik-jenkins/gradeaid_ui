@@ -21,9 +21,8 @@ export const createCategory = createAsyncThunk(
     const { category, assignmentId } = params;
 
     const categoryIds = (getState() as RootState).categories.allIds;
-    const newIdNumber =
-      Math.max(...categoryIds.map((id) => +id.replace('category-', ''))) + 1;
-    const newId = `category-${newIdNumber}`;
+    const newIdNumber = Math.max(...categoryIds.map((id) => +id)) + 1;
+    const newId = `${newIdNumber}`;
 
     const createdCategory: CreateCategoryPayload = {
       newCategory: { ...category, id: newId },
